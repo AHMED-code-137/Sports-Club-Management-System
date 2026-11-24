@@ -21,7 +21,6 @@ public class Schedule {
         return "Schedule #" + scheduleId + ": " + dayOfWeek + " (" + startTime + " - " + endTime + ")";
     }
 
-    // Getters and Setters (Encapsulation)
     public int getScheduleId() {
         return scheduleId;
     }
@@ -52,10 +51,5 @@ public class Schedule {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
-    }
-
-    @Override
-    public String toString() {
-        return getScheduleDetails();
     }
 }
