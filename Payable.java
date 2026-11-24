@@ -4,10 +4,6 @@
  */
 package com.mycompany.sportsclubsystem;
 
-/**
- *
- * @author Ahmed
- */
 public interface Payable {
-    
+    boolean processPayment();
 }
