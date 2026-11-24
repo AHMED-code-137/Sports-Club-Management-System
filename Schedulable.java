@@ -4,10 +4,7 @@
  */
 package com.mycompany.sportsclubsystem;
 
-/**
- *
- * @author Ahmed
- */
 public interface Schedulable {
-    
+    void assignSchedule(Schedule s);
+    String getScheduleDetails();
 }
