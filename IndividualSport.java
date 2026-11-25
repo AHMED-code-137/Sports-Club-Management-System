@@ -1,4 +1,4 @@
-
+package com.mycompany.sportsclubsystem;
 public class IndividualSport extends SportsActivity {
 
     // Additional attributes
