@@ -1,68 +1,87 @@
 package com.mycompany.sportsclubsystem;
-public abstract class SportsActivity implements Payable, Schedulable,
-        Comparable<SportsActivity> {
 
-    // Attributes
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class SportsActivity implements Payable, Schedulable, Comparable<SportsActivity> {
+
     private int activityId;
     private String activityName;
     private double baseFee;
     private int maxCapacity;
     private Coach coach;
     private Schedule schedule;
+    private final List<Member> enrolledMembers;
 
-    // Constructor
     public SportsActivity(int activityId, String activityName,
                           double baseFee, int maxCapacity,
                           Coach coach, Schedule schedule) {
-
         this.activityId = activityId;
         this.activityName = activityName;
         this.baseFee = baseFee;
         this.maxCapacity = maxCapacity;
         this.coach = coach;
         this.schedule = schedule;
+        this.enrolledMembers = new ArrayList<>();
     }
 
-    // Abstract method
     @Override
     public abstract double calculateTotalFee();
 
-    // Process payment
     @Override
     public boolean processPayment(double amount) {
-
         if (amount <= 0) {
             return false;
         }
-
         return amount >= calculateTotalFee();
     }
 
-    // Assign schedule
     @Override
     public void assignSchedule(Schedule s) {
         this.schedule = s;
     }
 
-    // Get schedule details
     @Override
     public String getScheduleDetails() {
-
         if (schedule == null) {
             return "No schedule assigned";
         }
-
         return schedule.getScheduleDetails();
     }
 
-    // Compare activities by name
     @Override
     public int compareTo(SportsActivity other) {
-        return this.activityName.compareToIgnoreCase(
-                other.activityName);
+        return this.activityName.compareToIgnoreCase(other.activityName);
     }
 
-    // Getters and Setters
+    // Methods required by ClubManager for enrollment
+    public void addMember(Member member) throws ActivityFullException {
+        if (member == null) {
+            throw new IllegalArgumentException("Member cannot be null.");
+        }
+        if (enrolledMembers.contains(member)) {
+            throw new IllegalArgumentException("Member is already enrolled in this activity.");
+        }
+        if (enrolledMembers.size() >= maxCapacity) {
+            throw new ActivityFullException("Activity '" + activityName + "' has reached its maximum capacity (" + maxCapacity + ").");
+        }
+        enrolledMembers.add(member);
+        member.register(this);
+    }
+
+    public void removeMember(Member member) {
+        enrolledMembers.remove(member);
+    }
+
+    public List<Member> getEnrolledMembers() {
+        return new ArrayList<>(enrolledMembers);
+    }
+
+    // Alias getId() for ClubManager compatibility
+    public int getId() {
+        return activityId;
+    }
+
     public int getActivityId() {
         return activityId;
     }
@@ -111,12 +130,11 @@ public abstract class SportsActivity implements Payable, Schedulable,
         this.schedule = schedule;
     }
 
-    // Display information
     @Override
     public String toString() {
         return "Activity ID: " + activityId +
                "\nActivity Name: " + activityName +
                "\nBase Fee: " + baseFee +
-               "\nMaximum Capacity: " + maxCapacity;
+               "\nCapacity: " + enrolledMembers.size() + "/" + maxCapacity;
     }
 }
