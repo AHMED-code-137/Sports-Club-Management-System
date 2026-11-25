@@ -1,13 +1,13 @@
 package com.mycompany.sportsclubsystem;
+
 import java.time.LocalDate;
 
-/** A completed payment. It cannot be changed after it is created. */
-public class Payment {
+public class Payment implements Payable {
 
     public enum Method { CASH, CARD, BANK_TRANSFER }
 
     private static final double TOLERANCE = 0.001;
-    private static int nextId = 1; // shared by all payments
+    private static int nextId = 1;
 
     private final int paymentId;
     private final Member member;
@@ -21,18 +21,27 @@ public class Payment {
         if (member == null || item == null || method == null) {
             throw new InvalidPaymentException("Member, item and payment method are required.");
         }
-        double requiredFee = item.calculateFee();
-        // Written this way so that NaN is rejected too.
+        double requiredFee = item.calculateTotalFee();
         if (!(amount > 0 && Math.abs(amount - requiredFee) <= TOLERANCE)) {
             throw new InvalidPaymentException(
                     "Invalid amount: " + amount + ". Required fee: " + requiredFee);
         }
-        this.paymentId = nextId++; // only valid payments take an ID
+        this.paymentId = nextId++;
         this.member = member;
         this.item = item;
         this.amount = amount;
         this.method = method;
         this.date = LocalDate.now();
+    }
+
+    @Override
+    public double calculateTotalFee() {
+        return item.calculateTotalFee();
+    }
+
+    @Override
+    public boolean processPayment(double paymentAmount) {
+        return Math.abs(paymentAmount - amount) <= TOLERANCE;
     }
 
     public int getPaymentId() {
