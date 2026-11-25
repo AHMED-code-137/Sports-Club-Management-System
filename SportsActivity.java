@@ -1,4 +1,4 @@
-
+package com.mycompany.sportsclubsystem;
 public abstract class SportsActivity implements Payable, Schedulable,
         Comparable<SportsActivity> {
 
