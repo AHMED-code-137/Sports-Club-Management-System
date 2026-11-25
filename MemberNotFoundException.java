@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.sportsclubsystem;
 
-/**
- *
- * @author Ahmed
- */
-public class MemberNotFoundException {
-    
+public class MemberNotFoundException extends Exception {
+    public MemberNotFoundException(String message) {
+        super(message);
+    }
 }
