@@ -1,11 +1,11 @@
 package com.mycompany.sportsclubsystem;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-/** Manages the club's data and operations. All printing is left to ClubUI. */
 public class ClubManager {
 
     private final List<Member> members = new ArrayList<>();
@@ -34,7 +34,6 @@ public class ClubManager {
         throw new MemberNotFoundException("No member with ID: " + id);
     }
 
-    /** Removes the member from the club and from all activities. Payments are kept. */
     public void removeMember(int id) throws MemberNotFoundException {
         Member member = findMemberById(id);
         for (SportsActivity activity : activities) {
@@ -80,17 +79,15 @@ public class ClubManager {
             throws MemberNotFoundException, ActivityFullException {
         Member member = findMemberById(memberId);
         SportsActivity activity = findActivityById(activityId);
-        activity.addMember(member); // the activity checks its own capacity
+        activity.addMember(member);
     }
 
-    /** Returns a sorted copy, using the natural order of SportsActivity. */
     public List<SportsActivity> getSortedActivities() {
         List<SportsActivity> copy = new ArrayList<>(activities);
         SortUtil.sort(copy);
         return copy;
     }
 
-    /** Returns a sorted copy, using any other order. */
     public List<SportsActivity> getSortedActivities(Comparator<? super SportsActivity> comparator) {
         List<SportsActivity> copy = new ArrayList<>(activities);
         SortUtil.sort(copy, comparator);
