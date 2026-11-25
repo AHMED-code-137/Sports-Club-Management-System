@@ -1,30 +1,24 @@
 package com.mycompany.sportsclubsystem;
+
 public class FitnessClass extends SportsActivity {
 
-    // Additional attributes
     private String intensity;
     private int roomNumber;
 
-    // Constructor
     public FitnessClass(int activityId, String activityName,
                         double baseFee, int maxCapacity,
                         Coach coach, Schedule schedule,
                         String intensity, int roomNumber) {
-
-        super(activityId, activityName, baseFee,
-              maxCapacity, coach, schedule);
-
+        super(activityId, activityName, baseFee, maxCapacity, coach, schedule);
         this.intensity = intensity;
         this.roomNumber = roomNumber;
     }
 
-    // Calculate total fee
     @Override
     public double calculateTotalFee() {
         return getBaseFee();
     }
 
-    // Getters and Setters
     public String getIntensity() {
         return intensity;
     }
@@ -41,7 +35,6 @@ public class FitnessClass extends SportsActivity {
         this.roomNumber = roomNumber;
     }
 
-    // Display information
     @Override
     public String toString() {
         return super.toString() +
