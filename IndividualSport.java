@@ -1,31 +1,24 @@
 package com.mycompany.sportsclubsystem;
+
 public class IndividualSport extends SportsActivity {
 
-    // Additional attributes
     private boolean personalCoach;
     private double equipmentFee;
 
-    // Constructor
     public IndividualSport(int activityId, String activityName,
                            double baseFee, int maxCapacity,
                            Coach coach, Schedule schedule,
-                           boolean personalCoach,
-                           double equipmentFee) {
-
-        super(activityId, activityName, baseFee,
-              maxCapacity, coach, schedule);
-
+                           boolean personalCoach, double equipmentFee) {
+        super(activityId, activityName, baseFee, maxCapacity, coach, schedule);
         this.personalCoach = personalCoach;
         this.equipmentFee = equipmentFee;
     }
 
-    // Calculate total fee
     @Override
     public double calculateTotalFee() {
         return getBaseFee() + equipmentFee;
     }
 
-    // Getters and Setters
     public boolean isPersonalCoach() {
         return personalCoach;
     }
@@ -42,7 +35,6 @@ public class IndividualSport extends SportsActivity {
         this.equipmentFee = equipmentFee;
     }
 
-    // Display information
     @Override
     public String toString() {
         return super.toString() +
