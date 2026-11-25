@@ -1,3 +1,4 @@
+package com.mycompany.sportsclubsystem;
 import java.time.LocalDate;
 
 /** A completed payment. It cannot be changed after it is created. */
